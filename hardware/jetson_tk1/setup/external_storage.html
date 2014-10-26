@@ -1,0 +1,64 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../style.css">
+		<title></title>
+	</head>
+	<body>
+		<h1>Install OS in external storage(SD card, USB Flash/HDD/SSD or SATA HDD/SSD)</h1>
+		<h2>Requirement:</h2>
+		<ul>
+			<li>Host PC with Linux</li>
+			<li>Target storage</li>
+			You install OS in this storage.
+			<li>Internet</li>
+			<li>USB cable</li>
+			This is included in Jetson TK1 box.
+		</ul>
+		<h2>Instruction:</h2>
+		<ol>
+			<li>Do "Fresh installation" in first post
+			<a href="https://devtalk.nvidia.com/default/topic/766303/embedded-systems/-customkernel-the-grinch-19-3-6-for-jetson-tk1/">in this topic</a>, but do not "Flash board"(./flash.sh)</li>
+			<li>Format target storage to ext3 and mount it</li>
+<pre class=cmd>sudo mkfs.ext3 /dev/sd?
+mkdir /mnt/jetson
+sudo mount /dev/sd? /mnt/jetson</pre>
+			<li>Copy Sample file system to target storage and unmount it</li>
+<pre class=cmd>cd <your_L4T_root>/Linux_for_Tegra/rootfs
+sudo cp -a * /mnt/jetson && sync
+umount /mnt/jetson</pre>
+			<li>Plug target storage to Jetson tk1</li>
+			<li>Connect Jetson TK1 to host PC using USB cable and Power on Jetson in recovery mode</li>
+			<li>Flash board</li>
+			<pre class=cmd>sudo ./flash.sh jetson-tk1 &lt;rootdev&gt;</pre>
+			If target storage is<br>
+			USB or SATA: &lt;rootdev&gt; = sda1<br>
+			SD card: &lt;rootdev&gt; = mmcblk1p1<br>
+			<li>Reboot Jetson</li>
+			<pre class=cmd>sudo reboot</pre>
+			<li>Login to your Jetson TK1</li>
+			<li>Execute following command in Jetson TK1</li>
+<pre class=cmd>sudo apt-add-repository universe
+#Keep Jetson specific driver files.
+sudo apt-mark hold xserver-xorg-core
+#Update system
+sudo apt-get update
+sudo apt-get upgrade
+</pre>
+			<li>Check whether Jetson specific driver files are not over written</li>
+			<pre class=cmd>sha1sum -c /etc/nv_tegra_release</pre>
+		</ol>
+
+		<h2>Tips:</h2>
+		If you will use the shell command-line a lot.<br>
+		<pre class=cmd>sudo apt-get install bash-completion command-not-found</pre>
+		You can update Ubuntu with following command next time.<br>
+		<pre class=cmd>sudo apt-get update
+sudo apt-get upgrade</pre>
+
+		These command don't update drivers for Jetson TK1.<br>
+		New drivers for Jetson TK1 will be released
+		<a href="https://developer.nvidia.com/linux-tegra-rel-19">here</a>.<br>
+		<br>
+		<a href="../index.html">Top</a><br>
+	</body>
+</html>

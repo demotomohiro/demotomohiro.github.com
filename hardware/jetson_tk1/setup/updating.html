@@ -1,0 +1,45 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../style.css">
+		<title>Updating system using internet</title>
+	</head>
+	<body>
+		<h1>Updating system using internet</h1>
+		<h2>Requirement:</h2>
+		<ul>
+			<li>Host PC with Linux</li>
+			<li>Internet</li>
+			<li>USB cable</li>
+			This is included in Jetson TK1 box.
+		</ul>
+		<h2>Instruction:</h2>
+		<ol>
+			<li>Do "Fresh installation" in first post
+			<a href="https://devtalk.nvidia.com/default/topic/766303/embedded-systems/-customkernel-the-grinch-19-3-6-for-jetson-tk1/">in this topic</a></li>
+			<li>Login to your Jetson TK1</li>
+			<li>Execute following command in Jetson TK1</li>
+<pre class=cmd>sudo apt-add-repository universe
+#Keep Jetson specific driver files.
+sudo apt-mark hold xserver-xorg-core
+#Update system
+sudo apt-get update
+sudo apt-get upgrade
+</pre>
+			<li>Check whether Jetson specific driver files are not over written</li>
+			<pre class=cmd>sha1sum -c /etc/nv_tegra_release</pre>
+		</ol>
+
+		<h2>Tips:</h2>
+		If you will use the shell command-line a lot.<br>
+		<pre class=cmd>sudo apt-get install bash-completion command-not-found</pre>
+		You can update Ubuntu with following command next time.<br>
+		<pre class=cmd>sudo apt-get update
+sudo apt-get upgrade</pre>
+
+		These command don't update drivers for Jetson TK1.<br>
+		New drivers for Jetson TK1 will be released
+		<a href="https://developer.nvidia.com/linux-tegra-rel-19">here</a>.<br>
+		<br>
+		<a href="../index.html">Top</a><br>
+	</body>
+</html>

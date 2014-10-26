@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../style.css">
+		<title>Serial console</title>
+	</head>
+	<body>
+		<h1>Serial console</h1>
+		Even if you cannot do remote access to Jetson tk1 and don't have HDMI display, you can access it using Serial console.<br>
+		<br>
+		<h2>Requirement:</h2>
+		<ul>
+			<li>USB serial converter</li>
+			You don't need USB serial converter if your host PC have serial port.
+			<li>null modem</li>
+			Jetson's serial port is a female connector, so you might also need gender changer.
+			<li>Host PC with USB or serial port</li>
+			Most of modern PC have USB but serial port.
+		</ul>
+		<h2>Instruction:</h2>
+		<ol>
+			<li>Connect Jetson tk1 to host PC with USB serial converter</li>
+			<li>Power on Jetson tk1</li>
+			<li>Execute folloing command in host PC</li>
+			<pre class=cmd>sudo screen /dev/ttyUSB0 115200</pre>
+			<li>Login as username:ubuntu/password:ubuntu</li>
+		</ol>
+		<a href="../index.html#preparing">Go to next step - Preparing System</a><br>
+		<br>
+		<h2>Tips:</h2>
+		You can save messages from serial port of Jetson to file:
+		<pre class=cmd>sudo stty -F /dev/ttyUSB0 115200
+sudo cat /dev/ttyUSB0 > log</pre>
+		<br>
+		If you are using USB serial converter in MS Windows, you might be interested in
+		<a href="http://hackaday.com/2014/10/22/watch-that-windows-update-ftdi-drivers-are-killing-fake-chips/">this news.</a><br>
+		<br>
+		<a href="../index.html">Top</a><br>
+	</body>
+</html>

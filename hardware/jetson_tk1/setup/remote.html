@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../style.css">
+		<title>Remote connection</title>
+	</head>
+	<body>
+		<h1>Remote connection</h1>
+		You can login to Jetson TK1 without connecting display to it.<br>
+		<h2>Requirement:</h2>
+		<ul>
+			<li>Local Area Network</li>
+			<li>LAN cable</li>
+			<li>Host PC with SSH client</li>
+		</ul>
+		<h2>Instruction:</h2>
+		<ol>
+			<li>Connect Jetson TK1 to your router</li>
+			<li>Connect AC adapter to Jetson tk1</li>
+			Jetson boots as soon as you connect AC adapter.
+			<li>Check connection to Jetson tk1 with command "ping tegra-ubuntu" from host PC in same local network.</li>
+			If "ping tegra-ubuntu" failed and you think Jetson TK1 is connected to your network, you can get IP address of Jetson TK1 with following command.<br>
+			In linux:<br>
+			<pre class=cmd>(not tested)
+nmap -sP -n 192.168.1.1-254</pre>
+			or<br>
+			<pre class=cmd>for i in 192.168.1.{1..254}; do ping -c 1 -w 1 $i && echo $i >> log; done</pre>
+			In windows:<br>
+			<pre class=cmd>for /l %i in (1,1,254) do ping -w 1 -n 1 192.168.1.%i && echo 192.168.1.%i >> log</pre>
+			log file contains a list of IP adress of PC in your local network.<br>
+			If a IP address of Jetson is "192.168.1.2", use "192.168.1.2" instead of "tegra-ubuntu".<br>
+			(I don't know why, but ping "tegra-ubuntu" never work in my local network.)<br>
+			<li>Run ssh client and connect to Jetson TK1 in host PC</li>
+			<pre class=cmd>ssh ubuntu@tegra-ubuntu</pre>
+			<li>Login as username:ubuntu/password:ubuntu</li>
+		</ol>
+		<a href="../index.html#preparing">Go to next step - Preparing System</a><br>
+		<br>
+		<a href="../index.html">Top</a><br>
+	</body>
+</html>
