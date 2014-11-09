@@ -5,6 +5,8 @@
 	</head>
 	<body>
 		<h1>Remote connection</h1>
+		<img src="remote.JPG" alt="Jetson with LAN" height=50%><br>
+		<br>
 		You can login to Jetson TK1 without connecting display to it.<br>
 		<h2>Requirement:</h2>
 		<ul>
@@ -27,7 +29,10 @@ nmap -sP -n 192.168.1.1-254</pre>
 			In windows:<br>
 			<pre class=cmd>for /l %i in (1,1,254) do ping -w 1 -n 1 192.168.1.%i && echo 192.168.1.%i >> log</pre>
 			log file contains a list of IP adress of PC in your local network.<br>
-			If a IP address of Jetson is "192.168.1.2", use "192.168.1.2" instead of "tegra-ubuntu".<br>
+			If a IP address of your Jetson TK1 is "192.168.1.2", add following line to /etc/hosts. Then, you can use "tegra-ubuntu".<br>
+			<pre class=cmd>192.168.1.2 tegra-ubuntu</pre>
+			(If a IP address of your Jetson TK1 was changed, you need to update the file.)<br>
+			Or you use "192.168.1.2" instead of "tegra-ubuntu".<br>
 			(I don't know why, but ping "tegra-ubuntu" never work in my local network.)<br>
 			<li>Run ssh client and connect to Jetson TK1 in host PC</li>
 			<pre class=cmd>ssh ubuntu@tegra-ubuntu</pre>
