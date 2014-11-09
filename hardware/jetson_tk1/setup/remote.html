@@ -25,9 +25,9 @@
 			<pre class=cmd>(not tested)
 nmap -sP -n 192.168.1.1-254</pre>
 			or<br>
-			<pre class=cmd>for i in 192.168.1.{1..254}; do ping -c 1 -w 1 $i && echo $i >> log; done</pre>
+			<pre class=cmd>for i in 192.168.1.{1..254}; do ping -c 1 -w 1 $i && echo $i &gt;&gt; log; done</pre>
 			In windows:<br>
-			<pre class=cmd>for /l %i in (1,1,254) do ping -w 1 -n 1 192.168.1.%i && echo 192.168.1.%i >> log</pre>
+			<pre class=cmd>for /l %i in (1,1,254) do ping -w 1 -n 1 192.168.1.%i && echo 192.168.1.%i &gt;&gt; log</pre>
 			log file contains a list of IP adress of PC in your local network.<br>
 			If a IP address of your Jetson TK1 is "192.168.1.2", add following line to /etc/hosts. Then, you can use "tegra-ubuntu".<br>
 			<pre class=cmd>192.168.1.2 tegra-ubuntu</pre>

@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<title>Tips</title>
+	</head>
+	<body>
+		<h1>Tips for beginners</h1>
+		<h2>Desktop</h2>
+		<ul>
+			<li>Push Ctrl + Alt + t key to open termial window.</li>
+			<li>If you got problems related to desktop, check "/var/log/Xorg.0.log".</li>
+			It is a log file of Xorg. There might be some hints to solve problems.
+			<li>When you want to shutdown or reboot, click icon looks like gear in right top of the desktop.</li>
+		</ul>
+		<h2>Console</h2>
+		<ul>
+			<li>Shutdown command</li>
+			<pre class=cmd>sudo shutdown -h now</pre>
+			<li>Reboot command</li>
+			<pre class=cmd>sudo reboot</pre>
+			<li>Push shift + Page up/down key to scroll console.</li>
+			<li>If you got problems, there might be some hints on the message buffer of the kernel. Following command show it.(Push q key to quit)</li>
+			<pre class=cmd>dmesg | less</pre>
+			<li>Save the message buffer of the kernel to file "log"</li>
+			<pre class=cmd>dmesg &gt; log</pre>
+			<li>Become "root"! Then, you don't need to type sudo. You should know about "root" and what you are doing.</li>
+			<pre class=cmd>sudo -i</pre>
+			You can exit root with "exit" command.<br>
+			<li>Turn off HDMI output</li>
+			<pre class=cmd>sudo -i
+echo 2 &gt; /sys/class/graphics/fb1/blank</pre>
+			<li>Turn on HDMI output</li>
+			<pre class=cmd>sudo -i
+echo 0 &gt; /sys/class/graphics/fb1/blank</pre>
+		</ul>
+		<br>
+		<a href="index.html">Top</a><br>
+	</body>
+</html>
