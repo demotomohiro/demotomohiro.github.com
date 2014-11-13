@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../style.css">
+		<title>Install NVIDIA kernel and drivers</title>
+	</head>
+	<body>
+		<h1>Install NVIDIA kernel and drivers</h1>
+		<h2>Requirement:</h2>
+		<ul>
+			<li>Host PC with Linux</li>
+			<li>Internet</li>
+			<li>USB cable</li>
+			This is included in Jetson TK1 box.
+		</ul>
+		<h2>Instruction:</h2>
+		<ol>
+			<li>Login to your host PC</li>
+			<li>Download NVIDIA Tegra Linux Driver Package and sample file system</li>
+			<pre class=cmd>$ wget http://developer.download.nvidia.com/mobile/tegra/l4t/r21.1.0/Tegra124_Linux_R21.1.0_armhf.tbz2
+$ wget http://developer.download.nvidia.com/mobile/tegra/l4t/r21.1.0/Tegra_Linux_Sample-Root-Filesystem_R21.1.0_armhf.tbz2</pre>
+			<li>extract it in host PC</li>
+			<pre class=cmd>$ sudo tar -vxjf Tegra124_Linux_R21.1.0_armhf.tbz2
+$ cd Linux_for_Tegra/rootfs
+$ sudo tar jxpf ../../Tegra_Linux_Sample-Root-Filesystem_R21.1.0_armhf.tbz2</pre>
+			<li>Run the apply_binaries.sh script to copy the NVIDIA libraries into rootfs directory</li>
+			<pre class=cmd>$ cd ..
+$ sudo ./apply_binaries.sh</pre>
+			<li><a href="recovery_mode.html">Connect Jetson TK1 to host PC and boot Jetson TK1 in recovery mode</a></li>
+			<li>Flash board</li>
+			This command install OS in Jetson TK1's internal storage.<br>
+			<pre class=cmd>$ sudo ./flash.sh -S 14580MiB jetson-tk1 mmcblk0p1</pre>
+		</ol>
+		<br>
+		<a href="../index.html">Top</a><br>
+	</body>
+</html>

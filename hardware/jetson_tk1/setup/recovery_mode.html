@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../style.css">
+		<title>Boot Jetson TK1 in recovery mode</title>
+	</head>
+	<body>
+		<h1>Boot Jetson TK1 in recovery mode</h1>
+		When you install OS or flash kernel or boot loader to Jetson TK1, it need to be connected to host PC and boot in recovery mode.<br>
+		Unlike PC with x86 CPU, Jetson TK1 cannot do that by itself.<br>
+		(2 Jetson TK1 might be able to update each other without PC?)<br>
+		<h2>Requirement:</h2>
+		<ul>
+			<li>Host PC with Linux</li>
+			<li>USB cable</li>
+			This is included in Jetson TK1 box.
+		</ul>
+		<h2>Instruction:</h2>
+		<ol>
+			<li>Turn off Jetson TK1</li>
+			<li>Connect the Micro-B plug on the USB cable(included in Jetson TK1 box) to the Recovery (USB Micro-B) Port on the Jetson TK1 and the other end to an available USB port on the host PC</li>
+			<li>Power on Jetson in recovery mode</li>
+			Press "Force Recovery" Button, press "POWER" Button, release POWER Button and release Force Recovery button.<br>
+			In recovery mode, you cannot login to Jetson TK1.<br>
+			If Jetson TK1 in recovery Mode and it is connected to host PC, "lsusb" command lists it with ID 0955:7140 in host PC.<br>
+			<pre class=cmd>$ lsusb
+Bus 002 Device 007: ID 0955:7140 NVidia Corp.</pre>
+		</ol>
+		<br>
+		<a href="../index.html">Top</a><br>
+	</body>
+</html>

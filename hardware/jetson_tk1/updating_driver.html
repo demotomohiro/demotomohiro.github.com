@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<title>Tips</title>
+	</head>
+	<body>
+		<h1>How to update driver</h1>
+		NVIDIA Tegra Linux Driver Package is not updated with "apt-get upgrade".<br>
+		You need to download and install it.<br>
+		This is how to do that.
+		<h2>Requirement:</h2>
+		<ul>
+			<li>Host PC with Linux</li>
+			<li>Internet</li>
+			<li>USB cable</li>
+			This is included in Jetson TK1 box.
+		</ul>
+		<h2>Instruction:</h2>
+		<ol>
+			<li>Log in to your Jetson TK1</li>
+			<li>Download NVIDIA Tegra Linux Driver Package and extract it</li>
+			<pre class=cmd>$ wget http://developer.download.nvidia.com/mobile/tegra/l4t/r21.1.0/Tegra124_Linux_R21.1.0_armhf.tbz2
+$ sudo tar -vxjf Tegra124_Linux_R21.1.0_armhf.tbz2</pre>
+			<li>Change directory and run the script</li>
+			<pre class=cmd>$ cd Linux_for_Tegra
+$ sudo ./apply_binaries.sh -r /</pre>
+			If the apply_binaries.sh script installs the binaries correctly, the last message output from the script is "Success!".<br>
+			<li>Check driver files</li>
+			<pre class=cmd>$ sha1sum -c /etc/nv_tegra_release</pre>
+			Next step is updating kernel.
+			<li>Login to your host PC</li>
+			<li>Download NVIDIA Tegra Linux Driver Package and extract it in host PC</li>
+			<pre class=cmd>$ wget http://developer.download.nvidia.com/mobile/tegra/l4t/r21.1.0/Tegra124_Linux_R21.1.0_armhf.tbz2
+sudo tar -vxjf Tegra124_Linux_R21.1.0_armhf.tbz2</pre>
+			<li>Change directory to "Linux_for_Tegra"</li>
+			<pre class=cmd>$ cd Linux_for_Tegra</pre>
+			<li><a href="setup/recovery_mode.html">Connect Jetson TK1 to host PC and boot Jetson TK1 in recovery mode</a></li>
+			<li>Flash kernel</li>
+			Execute following command in host PC.<br>
+			If you installed OS in internal storage:<br>
+			<pre class=cmd>$ sudo ./flash.sh -k 6 jetson-tk1 mmcblk0p1</pre>
+			If you installed OS in external storage:(Not tested)<br>
+			<pre class=cmd>$ sudo ./flash.sh jetson-tk1 &lt;rootdev&gt;</pre>
+			If target storage is<br>
+			USB or SATA: &lt;rootdev&gt; = sda1<br>
+			SD card: &lt;rootdev&gt; = mmcblk1p1<br>
+			<li>Reset Jetson TK1</li>
+			<li>Login to Jetson TK and check kernel version</li>
+			<pre class=cmd>$ uname -a
+</pre>
+			<li></li>
+		</ol>
+		<br>
+		<a href="index.html">Top</a><br>
+	</body>
+</html>

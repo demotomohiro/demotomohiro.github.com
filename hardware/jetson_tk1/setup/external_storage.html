@@ -16,18 +16,22 @@
 		</ul>
 		<h2>Instruction:</h2>
 		<ol>
-			<li>Do "Fresh installation" in first post
-			<a href="https://devtalk.nvidia.com/default/topic/766303/embedded-systems/-customkernel-the-grinch-19-3-6-for-jetson-tk1/">in this topic</a>, but do not "Flash board"(./flash.sh)</li>
+			<li>Install OS in Jetson TK1</li>
+			If you use "The Grinch" Custom Kernel by Santyago, Do "Fresh installation" in first post
+			<a href="https://devtalk.nvidia.com/default/topic/766303/embedded-systems/-customkernel-the-grinch-19-3-6-for-jetson-tk1/">in this topic</a>.<br>
+			(His kernel supports more devices than nvidia kernel, but it is still based on "Linux For Tegra R19.3" not R21.1)<br>
+			If you use nvidia kernel, <a href="nvidia_kernel.html">Install NVIDIA kernel and drivers</a><br>
+			But do not "Flash board"(./flash.sh) now.<br>
 			<li>Format target storage to ext3 and mount it</li>
 <pre class=cmd>sudo mkfs.ext3 /dev/sd?
 mkdir /mnt/jetson
 sudo mount /dev/sd? /mnt/jetson</pre>
 			<li>Copy Sample file system to target storage and unmount it</li>
-<pre class=cmd>cd <your_L4T_root>/Linux_for_Tegra/rootfs
+<pre class=cmd>cd <your_L4T_root>Linux_for_Tegra/rootfs
 sudo cp -a * /mnt/jetson && sync
 umount /mnt/jetson</pre>
 			<li>Plug target storage to Jetson tk1</li>
-			<li>Connect Jetson TK1 to host PC using USB cable and Power on Jetson in recovery mode</li>
+			<li><a href="recovery_mode.html">Connect Jetson TK1 to host PC and boot Jetson TK1 in recovery mode</a></li>
 			<li>Flash board</li>
 			<pre class=cmd>sudo ./flash.sh jetson-tk1 &lt;rootdev&gt;</pre>
 			If target storage is<br>
