@@ -16,12 +16,12 @@
 		<ol>
 			<li>Login to your host PC</li>
 			<li>Download NVIDIA Tegra Linux Driver Package and sample file system</li>
-			<pre class=cmd>$ wget http://developer.download.nvidia.com/mobile/tegra/l4t/r21.1.0/Tegra124_Linux_R21.1.0_armhf.tbz2
-$ wget http://developer.download.nvidia.com/mobile/tegra/l4t/r21.1.0/Tegra_Linux_Sample-Root-Filesystem_R21.1.0_armhf.tbz2</pre>
+			<pre class=cmd>$ wget http://developer.download.nvidia.com/embedded/L4T/r21_Release_v3.0/Tegra124_Linux_R21.3.0_armhf.tbz2
+$ wget http://developer.download.nvidia.com/embedded/L4T/r21_Release_v3.0/Tegra_Linux_Sample-Root-Filesystem_R21.3.0_armhf.tbz2</pre>
 			<li>extract it in host PC</li>
-			<pre class=cmd>$ sudo tar -vxjf Tegra124_Linux_R21.1.0_armhf.tbz2
+			<pre class=cmd>$ sudo tar -vxjf Tegra124_Linux_R21.3.0_armhf.tbz2
 $ cd Linux_for_Tegra/rootfs
-$ sudo tar jxpf ../../Tegra_Linux_Sample-Root-Filesystem_R21.1.0_armhf.tbz2</pre>
+$ sudo tar jxpf ../../Tegra_Linux_Sample-Root-Filesystem_R21.3.0_armhf.tbz2</pre>
 			<li>Run the apply_binaries.sh script to copy the NVIDIA libraries into rootfs directory</li>
 			<pre class=cmd>$ cd ..
 $ sudo ./apply_binaries.sh</pre>
