@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../style.css">
+		<title></title>
+	</head>
+	<body>
+		<h1>Install OS in SD card</h1>
+		<h2>Requirement:</h2>
+		<ul>
+			<li>SD card(16GB or larger)</li>
+			<li>Internet</li>
+			<li>Linux for tegra R21 is installed in eMMC on Jetson TK1</li>
+			<li>(Optional)Host PC with Linux if you want to setup SD card using it.</li>
+		</ul>
+		<h2>Notes:</h2>
+		This instruction requires U-Boot installed in eMMC on Jetson TK1.<br>
+		U-Boot is installed when you install Linux for Tegra R21 in eMMC.
+		<a href="updating.html">This is how to do it.</a><br>
+		If you buy a new Jetson TK1, it would comes with Linux for tegra R19 and fastboot is installed as boot loader.<br>
+		U-Boot in Linux for Tegra R21 tries to boot from SD card first. If it failed to boot from SD card, it tries to boot from eMMC.<br>
+		This instruction will not work if you want to boot from SD card through USB SD card reader.<br>
+		<h2>Instruction:</h2>
+		<ol>
+			<li>Login to machine to setup SD card</li>
+			You can setup SD card with Jetson TK1 or Host PC with Linux and SD card slot.
+			<li>Format SD card to ext4</li>
+			<a href="https://blogofterje.wordpress.com/2012/01/14/optimizing-fs-on-sd-card/">this site</a>
+			might help to find optimal parameter.<br>
+<pre class=cmd>sudo mkfs.ext4 /dev/mmcblk1p1</pre>
+			<li>Download Linux For Tegra R21.4 and Sample File System(Ubuntu 14.04.1 LTS)</li>
+			<pre class=cmd>$ wget http://developer.download.nvidia.com/embedded/L4T/r21_Release_v4.0/Tegra124_Linux_R21.4.0_armhf.tbz2
+$ wget http://developer.download.nvidia.com/embedded/L4T/r21_Release_v4.0/Tegra_Linux_Sample-Root-Filesystem_R21.4.0_armhf.tbz2</pre>
+			<li>Mount SD card and extract them to SD card</li>
+			<pre class=cmd>$ sudo tar xpf Tegra124_Linux_R21.4.0_armhf.tbz2
+$ sudo mount /dev/mmcblk1p1 Linux_for_Tegra/rootfs
+$ cd Linux_for_Tegra/rootfs
+$ sudo tar xpf ../../Tegra_Linux_Sample-Root-Filesystem_R21.4.0_armhf.tbz2</pre>
+			<li>Run the apply_binaries.sh script to copy the NVIDIA libraries into rootfs directory</li>
+			<pre class=cmd>$ cd ..
+$ sudo ./apply_binaries.sh</pre>
+			<li>Copy extlinux.conf file</li>
+			Path to a kernel file and kernel parameters are written in /boot/extlinux/extlinux.conf.<br>
+			U-Boot read this file and load kernel.<br>
+			If U-Boot failed to read this file, it tries to boot from other storage.<br>
+<pre class=cmd>$ cd rootfs/boot/extlinux/
+$ sudo cp jetson-tk1_extlinux.conf.sdcard extlinux.conf</pre>
+			<li>unmount SD card</li>
+<pre class=cmd>$ cd ~
+$ sync
+$ umount Linux_for_Tegra/rootfs</pre>
+			<li>Insert SD card to Jetson tk1 if it is not</li>
+			<li>Reboot Jetson</li>
+			<pre class=cmd>$ sudo reboot</pre>
+			<li>Login to your Jetson TK1</li>
+			<li>Check Root file system size</li>
+			<pre class=cmd>$ df -h</pre>
+			<li>Execute following command in Jetson TK1</li>
+<pre class=cmd>$ sudo apt-add-repository universe
+#Keep Jetson specific driver files.
+$ sudo apt-mark hold xserver-xorg-core
+#Update system
+$ sudo apt-get update
+$ sudo apt-get upgrade</pre>
+			<li>Check whether Jetson specific driver files are not over written</li>
+			<pre class=cmd>sha1sum -c /etc/nv_tegra_release</pre>
+		</ol>
+If you use Jetson TK1 "The Grinch" Custom Kernel 21.3.4 by Santyago, start from "3) Download Grinch Kernel" in first post
+			<a href="https://devtalk.nvidia.com/default/topic/823132/embedded-systems/-customkernel-the-grinch-21-3-4-for-jetson-tk1-developed/">in this topic</a>.
+		<h2>Tips:</h2>
+		If you will use the shell command-line a lot.<br>
+		<pre class=cmd>$ sudo apt-get install bash-completion command-not-found</pre>
+		You can update Ubuntu with following command next time.<br>
+		<pre class=cmd>$ sudo apt-get update
+$ sudo apt-get upgrade</pre>
+
+		These command don't update drivers for Jetson TK1.<br>
+		New drivers for Jetson TK1 will be released
+		<a href="https://developer.nvidia.com/embedded/linux-tegra">here</a>.<br>
+		<br>
+		<a href="../index.html">Top</a><br>
+	</body>
+</html>
