@@ -19,6 +19,20 @@
 			<li>Reboot command</li>
 			<pre class=cmd>sudo reboot</pre>
 			<li>Push shift + Page up/down key to scroll console.</li>
+			<li>Show storage space usage</li>
+			<pre class=cmd>df -h</pre>
+			<li>Show Linux for Tegra version</li>
+			<pre class=cmd>cat /etc/nv_tegra_release | head -n 1</pre>
+			<li>Show kernel version</li>
+			<pre class=cmd>uname -a</pre>
+			<li>Show IP address of LAN port</li>
+			<pre class=cmd>ip addr show dev eth0</pre>
+			<li>List block devices</li>
+			<pre class=cmd>lsblk</pre>
+			<li>List USB devices</li>
+			<pre class=cmd>lsusb</pre>
+			<li>List PCI devices</li>
+			<pre class=cmd>lspci</pre>
 			<li>If you got problems, there might be some hints on the message buffer of the kernel. Following command show it.(Push q key to quit)</li>
 			<pre class=cmd>dmesg | less</pre>
 			<li>Save the message buffer of the kernel to file "log"</li>
