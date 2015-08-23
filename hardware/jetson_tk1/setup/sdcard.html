@@ -45,9 +45,9 @@ $ sudo ./apply_binaries.sh</pre>
 <pre class=cmd>$ cd rootfs/boot/extlinux/
 $ sudo cp jetson-tk1_extlinux.conf.sdcard extlinux.conf</pre>
 			<li>unmount SD card</li>
-<pre class=cmd>$ cd ~
+<pre class=cmd>$ cd ../../../
 $ sync
-$ umount Linux_for_Tegra/rootfs</pre>
+$ sudo umount rootfs</pre>
 			<li>Insert SD card to Jetson tk1 if it is not</li>
 			<li>Reboot Jetson</li>
 			<pre class=cmd>$ sudo reboot</pre>
