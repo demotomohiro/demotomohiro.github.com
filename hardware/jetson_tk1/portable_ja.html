@@ -1,0 +1,111 @@
+﻿<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<title>BluetoothでJetson TK1にリモートアクセス</title>
+	</head>
+	<body>
+		<h1>Jetson TK1を持ち歩こう</h1>
+		Jetson TK1を持って旅にでよう。<br>
+		旅先で開発するもよし, 友達に自慢するのもいい。<br>
+		<h2>概要</h2>
+		持ち運びしたいので, 電源は12V出力できてJetson TK1に差し込めるモバイルバッテリを使用。<br>
+		Jetsonに直接USBキーボードとHDMIディスプレイを繋げて立ったままJetson TK1を使うのはきつそうだ。<br>
+		そこでJetson TK1本体はカバン等に入れておき, sshやVNC経由でAndroidタブレットかスマートフォンからJetson TK1を操作する。<br>
+		タブレットとJetson TK1間をケーブルで繋ぎたくないので, Bluetoothで接続する。<br>
+		もしWifiが利用可能であればJetson TK1をWifiに接続し, タブレットはJetson TK1経由でインターネットに接続できるようにする。<br>
+		Jetson TK1本体にはBluetoothも無線LAN機能も無いので, USB BluetoothアダプタとUSB無線LANアダプタを利用した。<br>
+		現在最新のLinux For Tegra R21.4とThe Grinch Kernel 21.3.4を使用。<br>
+
+		<h2>BluetoothでJetson TK1にリモートアクセス</h1>
+		BluetoothのPAN(Personal Area Network) Profileを利用してタブレット等からJetson TK1へ接続。
+		<h3>Bluetooth接続のメリット</h3>
+		<ul>
+			<li>Wifiより消費電力が少ない</li>
+			<li>無線LANの2.4GHz帯が混雑しているときはBluetoothの方が速い</li>
+			Bluetoothは無線LANと同様の2.4GHzの周波数を使っているが無線LANと干渉を防ぐ仕組みがある
+			<li>ペアリングするだけで接続できる。SSIDやパスワードを設定したり入力する必要がない</li>
+		</ul>
+		<h3>デメリット</h3>
+		<ul>
+			<li>電波の干渉がないときは無線LANの方が高速</li>
+			<li>最大7つまでしか接続できない</li>
+		</ul>
+
+		<h2>Bluetoothアダプタのセットアップ</h2>
+		BluetoothアダプタにはLogitec LBT-UAN04C1BKを使った。<br>
+		The Grinch kernelを使っているので, ドライバをインストールしなくても認識されていた。<br>
+		しかしscanしてもBluetooth機器を発見できなかった。<br>
+		そこで調べた所, <a href="https://bugs.launchpad.net/ubuntu/+source/bluez/+bug/781556">こちら</a>に書いてあることを参考に
+		<pre class=cmd>$ bccmd psset -r -s implementation 0x028c 0x0001</pre>
+		を実行するとscanが動作した。<br>
+		その後は再起動した後でもこのコマンドを実行せずに動作した。<br>
+
+		<h3>Bluetooth PANの準備</h3>
+		この機能を使うにはKernelのbridge機能が有効になっている必要がある。以下のコマンドで確認できる。<br>
+		zcat /proc/config.gz | grep BRIDGE<br>
+		L4T21.4のカーネルではデフォルトで有効になっていないがGrinch kernelだと有効になっている。<br>
+		sudoしなくてもbluetoothの機能にアクセスできるようにする。<br>
+		<pre class=cmd>$ sudo gpasswd -a ubuntu bluetooth</pre>
+		簡単にJetson TK1とタブレットを接続できるようにするためにbluemanを使う。<br>
+		<pre class=cmd>$ sudo apt-get install blueman</pre>
+		bluemanを使うためにデスクトップ画面を出す。(もしデスクトップが起動していなかったら起動する)<br>
+		画面右上にbluetoothのマークがあるのを確認する。<br>
+		もしなければ, コンソールから<br>
+		blueman-appletを実行する。<br>
+		bluetoothのマークを右クリック→Local Servicesをクリックする。<br>
+		左側のNetworkをクリックし, Network Access Point(NAP)のチェックボックをonにする。<br>
+		NAP SettingsのIP Address:の横に書いてあるのがbluetoothからJetson TK1に接続したときのJetson TK1のIPアドレスになる。<br>
+		Applyをクリックして画面を閉じる。<br>
+		次はタブレットとJetson TK1をペアリングする。<br>
+		今度はデスクトップ右上のbluetoothのアイコンをクリックする。<br>
+		Adapter→PreferencesをクリックしTemporarily visibleを選ぶ。<br>
+		タブレットでbluetoothデバイスを検索する。<br>
+		tegra-ubuntu-0のような名前のデバイスが見つかるのでペアリングする。<br>
+		タブレットでtegra-ubuntu-0経由のインターネットアクセスを有効にする。<br>
+		もしJetson TK1がインターネットに繋がっていればタブレットもJetson TK1経由でインターネットに繋げられる。<br>
+		<br>
+		これでデスクトップが立ち上がっていればbluemanが動きbluetoothで接続できるようになった。<br>
+		しかしJetson TK1にはディスプレイを繋がずに使用するので, その状態でもデスクトップが起動する必要がある。<br>
+		そこでTurboVNCをインストールして起動時に自動的にTurboVNCサーバーが立ち上がるようにした。<br>
+		TurboVNCのインストール方法は<a href="https://devtalk.nvidia.com/default/topic/828974/embedded-systems/-howto-install-virtualgl-and-turbovnc-to-jetson-tk1/">こちら</a>を参照。<br>
+
+		<h2>USB無線LANアダプタのセットアップ</h2>
+		USB無線LANにはPLANEX 無線LAN子機 (USB3.0アダプター型) 高速モデル GW-900D-BKを使った。<br>
+		これにはRTL8812AUというチップが使われていて<a href="http://elinux.org/Jetson/Network_Adapters">このサイト</a>からドライバのソースコードを入手できる。<br>
+		このソースコードは<a href="https://github.com/gnab/rtl8812au">こちら</a>にあるドライバのソースコードをJetson TK1用にビルドできるよう修正されたものだ。<br>
+		しかしelinux.orgから配布されているソースコードはgithubにある最新のソースコードが取り入れられていないせいか, そのままビルドしてできたドライバーはエラーがでて使い物にならなかった。<br>
+		そこでgithubにある最新のソースコードをcloneして, elinux.orgのソースコードの変更箇所をマージしてビルドすると安定して動作した。<br>
+		ビルドにはkernelのソースコードが必要だった。<br>
+		<a href="https://devtalk.nvidia.com/default/topic/823132/embedded-systems/-customkernel-the-grinch-21-3-4-for-jetson-tk1-developed/">ここ</a>から自分が使っているThe Grinch 21.3.4 for Jetson TK1のソースコードを入手し, そこに書いてある通りに/usr/src下に解凍した。<br>
+		後は<a href="https://github.com/gnab/rtl8812au">こちら</a>に書いてある通りにドライバをインストールすればOK。<br>
+		ちなみにsudo insmod 8812au.koする前にsudo modprobe cfg80211しないとエラーがでる。<br>
+		ドライバがインストールされUSB無線LANアダプタが接続されていれば以下のコマンドで確認できる。<br>
+		<pre class=cmd>$ sudo nmcli -f general dev list</pre>
+		<h2>無線LAN APに接続</h2>
+		コマンドライン版NetworkManagerでJetson TK1を無線LANアクセスポイントに接続する。<br>
+		周囲のアクセスポイント一覧を表示。<br>
+		<pre class=cmd>$ sudo nmcli dev wifi</pre>
+		アクセスポイントに接続。<br>
+		<pre class=cmd>$ sudo nmcli dev wifi connect <SSID> password <password></pre>
+		このコマンドで接続できるとSSIDとパスワードが保存される。<br>
+		以後は以下のコマンドで同じAPに接続できる。<br>
+		<pre class=cmd>$ sudo nmcli con up id <SSID></pre>
+		以下のコマンドで保存されたSSID一覧が表示される。<br>
+		<pre class=cmd>$ sudo nmcli con</pre>
+		現在の接続状態を確認。
+		<pre class=cmd>$ sudo nmcli dev status
+$ sudo nmcli con status</pre>
+		一度接続すると次からはアクセスポイントにいると再起動後も自動的に接続するようである。<br>
+		切断したい場合は<br>
+		<pre class=cmd>$ sudo nmcli dev disconnect iface wlan0</pre>
+		<h3>その他</h3>
+		最初はbluemanを使わずにCUIだけでPANを設定しようとしたがうまくいかなかった。<br>
+		https://github.com/Douglas6/pinaple<br>
+		https://github.com/ykasidit/ecodroidlink<br>
+		にあるpythonスクリプトを使うとPANを構築できたがタブレットからJetson TK1経由でインターネットに接続することはできなかった。<br>
+		dnsmasqやip-tables, brctlをうまく設定してJetson TK1をルータのようにすれば可能かもしれない。<br>
+		bluemanは自動的にdnsmasqやip-tablesを呼び出してbluetoothで接続した端末がインターネットにアクセスできるようにしてくれるようだ。<br>
+		<br>
+		<a href="../../index.html">Top</a><br>
+	</body>
+</html>
