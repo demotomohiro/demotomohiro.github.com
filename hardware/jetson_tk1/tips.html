@@ -26,6 +26,7 @@
 			<li>Show kernel version</li>
 			<pre class=cmd>uname -a</pre>
 			<li>Show IP address of LAN port</li>
+			(ifconfig is deprecated, and ip is a replacement command)
 			<pre class=cmd>ip addr show dev eth0</pre>
 			<li>List block devices</li>
 			<pre class=cmd>lsblk</pre>
@@ -40,12 +41,39 @@
 			<li>Become "root"! Then, you don't need to type sudo. You should know about "root" and what you are doing.</li>
 			<pre class=cmd>sudo -i</pre>
 			You can exit root with "exit" command.<br>
+			<li>Use up and down key to get previously executed command</li>
+			<li>Use tab key to complement command or file path</li>
+			<li>Use ctrl + r key to search previously executed commands</li>
 			<li>Turn off HDMI output</li>
 			<pre class=cmd>sudo -i
 echo 2 &gt; /sys/class/graphics/fb1/blank</pre>
 			<li>Turn on HDMI output</li>
 			<pre class=cmd>sudo -i
 echo 0 &gt; /sys/class/graphics/fb1/blank</pre>
+		</ul>
+		<h2>SSH tips</h2>
+		<ul>
+			<li>Execute a window program from ssh</li>
+			If Jetson TK1 is connect to a display or VNC is running on it and desktop environment is running,
+			you can execute programs from ssh and show windows on your desktop.<br>
+			Set "DISPLAY" environment variable to ":0" if your Jetson TK1 is connect to a display.</br>
+			Set one to ":1" if you are using VNC.</br>
+			<pre class=cmd>export DISPLAY=:0
+firefox &</pre>
+		</ul>
+		<h3>tmux</h3>
+		If you disconnect from SSH server, process on the ssh session are terminated.<br>
+		But by using tmux, your terminal and process on it running on background after disconnected from SSH server.
+		And you can continue working with the terminal later even if you connect the server using a different client.
+		tmux also has many useful features when you are working with ssh.
+		<a href="http://tmux.github.io/">Read this site</a> for more detail.
+		<ul>
+			<li>Install tmux</li>
+			<pre class=cmd>sudo apt-get install tmux</pre>
+			<li>Execute tmux</li>
+			<pre class=cmd>tmux</pre>
+			<li>Reattach to existing tmux session</li>
+			<pre class=cmd>tmux a</pre>
 		</ul>
 		<br>
 		<a href="index.html">Top</a><br>
