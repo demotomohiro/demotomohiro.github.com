@@ -15,10 +15,7 @@
 		<h2>Instruction:</h2>
 		<ol>
 			<li>Install OS in Jetson TK1</li>
-			If you use "The Grinch" Custom Kernel by Santyago, there is how to install it in first post
-			<a href="https://devtalk.nvidia.com/default/topic/823132/embedded-systems/-customkernel-the-grinch-21-3-2-for-jetson-tk1-developed/">in this topic</a>.<br>
-			(His kernel supports more devices than nvidia kernel)<br>
-			If you use nvidia kernel, <a href="nvidia_kernel.html">Install NVIDIA kernel and drivers</a><br>
+			<a href="nvidia_kernel.html">Install NVIDIA kernel and drivers</a><br>
 			<li>Login to your Jetson TK1</li>
 			<li>Execute following command in Jetson TK1</li>
 <pre class=cmd>sudo apt-add-repository universe
@@ -30,6 +27,10 @@ sudo apt-get upgrade
 </pre>
 			<li>Check whether Jetson specific driver files are not over written</li>
 			<pre class=cmd>sha1sum -c /etc/nv_tegra_release</pre>
+			<li>(Optional) Install "The Grinch" Custom Kernel by Santyago</li>
+			If you want to use the Grinch kernel, use 
+			<a href="https://github.com/jetsonhacks/installGrinch">this script</a>.<br>
+			(His kernel supports more devices than nvidia kernel)<br>
 		</ol>
 
 		<h2>Tips:</h2>
