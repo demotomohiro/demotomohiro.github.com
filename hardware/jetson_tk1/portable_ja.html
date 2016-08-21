@@ -42,8 +42,9 @@
 		その後は再起動した後でもこのコマンドを実行せずに動作した。<br>
 
 		<h3>Bluetooth PANの準備</h3>
-		この機能を使うにはKernelのbridge機能が有効になっている必要がある。以下のコマンドで確認できる。<br>
-		zcat /proc/config.gz | grep BRIDGE<br>
+		この機能を使うにはKernelのCONFIG_BRIDGEとCONFIG_BT_BNEPが有効になっている必要がある。以下のコマンドで確認できる。<br>
+		<pre class=cmd>zcat /proc/config.gz | grep BRIDGE
+zcat /proc/config.gz | grep BT_BNEP</pre>
 		L4T21.4のカーネルではデフォルトで有効になっていないがGrinch kernelだと有効になっている。<br>
 		sudoしなくてもbluetoothの機能にアクセスできるようにする。<br>
 		<pre class=cmd>$ sudo gpasswd -a ubuntu bluetooth</pre>
