@@ -1,0 +1,45 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../style.css">
+		<title>Remote connection without router</title>
+	</head>
+	<body>
+		<h1>Remote connection without router</h1>
+		<img src="remote_wo_router.JPG" alt="Jetson with LAN" height=50%><br>
+		<br>
+		You can login to Jetson TK1 without display and router.<br>
+		You can do it by directly connecting your Jetson TK1 to your MS Windows PC with an Ethernet cable.<br>
+		In this method, your Windows PC becomes like router by enabling Internet Connection Sharing(ICS).<br>
+		This page explains how to enable ICS on Windows 8.1. If you are using different version of Windows, google about how to enable ICS on your windows.<br>
+		If you don't have a Windows PC but Linux PC, <a href="http://elinux.org/Jetson/Remote_Access#Not-as-easy_method:_Internet_Connection_Sharing_with_NetworkManager">This page</a> might help you.<br>
+		<h2>Requirement:</h2>
+		<ul>
+			<li>LAN cable</li>
+			<li>Host PC with Microsoft Windows OS, Ethernet port and Wifi (You don't need Wifi access points)</li>
+			<li>An SSH client for Windows</li>
+		</ul>
+		<h2>Instruction:</h2>
+		<ol>
+			<li>Boot your Windows Host PC</li>
+			<li>Open "Network Connections" page</li>
+			Open the Control Panel, click Network and Sharing Center and click "Change adapter settings".<br>
+			<li>Enable ICS</li>
+			Right click Wi-Fi, click "Properties", click "Sharing" tab and select "Allow other network users to connect through this computer's Internet connection".<br>
+			Set "Home networking connection:" to Ethernet and click OK.
+			<li>Connect Jetson TK1 to your Windows Host PC with an Ethernet cable</li>
+			<li>Connect an AC adapter to Jetson tk1</li>
+			Jetson TK1 boots as soon as you connect an AC adapter and automatically get an IP address from host PC.<br>
+			<li>Find an assigned IP address</li>
+			Open Command Prompt on host PC and run:<br>
+			<pre class=cmd>arp -a</pre>
+			Jetson TK1 might take about 60 seconds to get an IP address after boot.<br>
+			First 6 numbers of Jetson's LAN port physical address is "00-04-4b".<br>
+			Find an IP address followed by such a physical address from the output.<br>
+			<li>Run ssh client in host PC and login to Jetson TK1 using found IP address.</li>
+			Login as username:ubuntu/password:ubuntu.
+		</ol>
+		<a href="../index.html#preparing">Go to next step - Preparing System</a><br>
+		<br>
+		<a href="../index.html">Top</a><br>
+	</body>
+</html>
